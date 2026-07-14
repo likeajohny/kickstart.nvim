@@ -1,20 +1,37 @@
 return {
-  'rose-pine/neovim',
-  name = 'rose-pine',
+  'sainnhe/everforest',
+  name = 'everforest',
   priority = 1000,
-  opts = {
-    -- 'auto' follows `vim.o.background` (which Neovim auto-detects from the
-    -- terminal): dark -> dark_variant, light -> dawn.
-    variant = 'auto',
-    dark_variant = 'moon',
-  },
-  config = function(_, opts)
-    require('rose-pine').setup(opts)
-    vim.cmd 'colorscheme rose-pine'
+  config = function()
+    vim.g.everforest_enable_italic = true
+    vim.g.everforest_better_performance = 1
+
+    -- Match Ghostty: Dark -> Hard, Light -> Medium. Neovim auto-detects the
+    -- terminal's light/dark (OSC 11); re-apply on any runtime switch.
+    local function apply()
+      vim.g.everforest_background = vim.o.background == 'light' and 'medium' or 'hard'
+      vim.cmd 'colorscheme everforest'
+    end
+    apply()
+    vim.api.nvim_create_autocmd('OptionSet', { pattern = 'background', callback = apply })
   end,
 }
 
 -- Previous colorscheme, kept for easy switch-back:
+--return {
+--  'rose-pine/neovim',
+--  name = 'rose-pine',
+--  priority = 1000,
+--  opts = {
+--    variant = 'auto',
+--    dark_variant = 'moon',
+--  },
+--  config = function(_, opts)
+--    require('rose-pine').setup(opts)
+--    vim.cmd 'colorscheme rose-pine'
+--  end,
+--}
+
 --return {
 --  'rebelot/kanagawa.nvim',
 --  name = 'kanagawa',
@@ -46,23 +63,3 @@ return {
 --    vim.cmd.colorscheme 'catppuccin'
 --  end,
 -- }
-
---return {
---  'embark-theme/vim',
---  priority = 1000,
---  config = function()
---    vim.cmd.colorscheme 'embark'
---  end,
---}
-
---return {
---  'olimorris/onedarkpro.nvim',
---  priority = 1000,
---  config = function()
---    if vim.o.background == 'dark' then
---      vim.cmd.colorscheme 'onedark'
---    else
---      vim.cmd.colorscheme 'onelight'
---    end
---  end,
---}
