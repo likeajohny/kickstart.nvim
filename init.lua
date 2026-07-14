@@ -107,6 +107,10 @@ vim.o.relativenumber = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
+-- Enable 24-bit RGB (truecolor) so colorschemes render their true palette
+-- instead of falling back to 256-color approximations.
+vim.o.termguicolors = true
+
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
