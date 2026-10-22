@@ -1,16 +1,24 @@
+-- Dark: Everforest hard. Light: Gruvbox hard. Neovim sets 'background' from
+-- the terminal's answer to its colour query (OSC 11); apply() runs again on
+-- every runtime switch.
+local function apply()
+  if vim.o.background == 'light' then
+    require('gruvbox').setup { contrast = 'hard' }
+    vim.cmd 'colorscheme gruvbox'
+  else
+    vim.g.everforest_background = 'hard'
+    vim.g.everforest_enable_italic = true
+    vim.g.everforest_better_performance = 1
+    vim.cmd 'colorscheme everforest'
+  end
+end
+
 return {
   'ellisonleao/gruvbox.nvim',
   name = 'gruvbox',
   priority = 1000,
+  dependencies = { { 'sainnhe/everforest', name = 'everforest' } },
   config = function()
-    -- Match Ghostty: Dark Hard / Light Hard -> hard contrast for both.
-    -- gruvbox.nvim reads vim.o.background to pick the light/dark palette;
-    -- Neovim auto-detects the terminal's light/dark (OSC 11). Re-apply on any
-    -- runtime switch.
-    local function apply()
-      require('gruvbox').setup { contrast = 'hard' }
-      vim.cmd 'colorscheme gruvbox'
-    end
     apply()
     vim.api.nvim_create_autocmd('OptionSet', { pattern = 'background', callback = apply })
   end,
