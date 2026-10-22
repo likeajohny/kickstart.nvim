@@ -3,11 +3,10 @@
 -- every runtime switch.
 local function apply()
   if vim.o.background == 'light' then
-    require('gruvbox').setup { contrast = 'hard', transparent_mode = true }
+    require('gruvbox').setup { contrast = 'hard' }
     vim.cmd 'colorscheme gruvbox'
   else
     vim.g.everforest_background = 'hard'
-    vim.g.everforest_transparent_background = 1
     vim.g.everforest_enable_italic = true
     vim.g.everforest_better_performance = 1
     vim.cmd 'colorscheme everforest'
